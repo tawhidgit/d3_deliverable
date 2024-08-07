@@ -1,4 +1,5 @@
-package d3_deliverable;
+package d3_delivarable;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import java.util.Map;
 /**
  * The TranscendentalFunctionGUI class creates a GUI application
  * to calculate and display the result of the transcendental function B(x, y).
+ * @Tawhidur Rahman
  */
 public class TranscendentalFunctionGui {
     private Map<String, Double> cache = new HashMap<>();
@@ -63,14 +65,14 @@ public class TranscendentalFunctionGui {
                     if (cache.containsKey(cacheKey)) {
                         result = cache.get(cacheKey);
                     } else {
-                        result = B(x, y);
+                        result = transcendentalFunctionB(x, y);
                         cache.put(cacheKey, result);
                     }
 
                     resultLabel.setText("Result: " + result);
                 } catch (NumberFormatException ex) {
                     resultLabel.setText("Invalid input. Please enter numeric values.");
-                } catch (Exception ex) {
+                } catch (IllegalArgumentException ex) {
                     resultLabel.setText("Error: " + ex.getMessage());
                 }
             }
@@ -88,16 +90,16 @@ public class TranscendentalFunctionGui {
     }
 
     /**
-     * Calculates the transcendental function B(x, y).
+     * Calculates the transcendental function transcendentalFunctionB(x, y).
      * 
      * @param x the x value
      * @param y the y value
      * @return the result of the function
-     * @throws Exception if x or y are negative
+     * @throws IllegalArgumentException if x or y are negative
      */
-    private double B(double x, double y) throws Exception {
+    private double transcendentalFunctionB(double x, double y) throws IllegalArgumentException {
         if (x < 0 || y < 0) {
-            throw new Exception("Inputs must be non-negative.");
+            throw new IllegalArgumentException("Inputs must be non-negative.");
         }
         return sin(x) + cos(y); // Example of transcendental function calculation
     }
@@ -111,7 +113,6 @@ public class TranscendentalFunctionGui {
     private double sin(double x) {
         double result = 0;
         double term = x;
-        int n = 1;
 
         for (int i = 1; i <= 15; i++) {
             result += term;
@@ -124,16 +125,15 @@ public class TranscendentalFunctionGui {
     /**
      * Computes the cosine of a value using the Taylor series expansion.
      * 
-     * @param x the value to compute the cosine of
+     * @param y the value to compute the cosine of
      * @return the cosine of x
      */
-    private double cos(double x) {
+    private double cos(double y) {
         double result = 1;
         double term = 1;
-        int n = 1;
 
         for (int i = 1; i <= 15; i++) {
-            term *= -x * x / (2 * i * (2 * i - 1));
+            term *= -y * y / (2 * i * (2 * i - 1));
             result += term;
         }
 
